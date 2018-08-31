@@ -2,7 +2,7 @@
   <div>
     <!--<GmapMap v-bind:center="{lat:10, lng:10}"-->
     <GmapMap v-bind:center="center" v-bind:zoom="13" map-type-id="terrain" v-bind:options="mapStyle"
-      style="width: 100vw; height: 82vh">
+      style="max-width:450px;width: 100vw; height: 87vh">
       <GmapMarker v-bind:key="index" v-for="(m, index) in markers"
         v-bind:position="m.position"
         v-bind:clickable="true"
@@ -42,7 +42,7 @@
 <script>
   export default{
     beforeMount(){
-      console.log("555");
+      //console.log("555");
       var that = this;
       $.ajax({
         url: "https://www.sharegotech.com/locations/getLocations",
@@ -51,13 +51,13 @@
         async: false,
         success: function (result) {
           // this.all_events = result.body;
-          // console.log(result);
+          // //console.log(result);
           that.markers=result;
-          // console.log(this.markers);
+          // //console.log(this.markers);
           that.center = {"lat": -33.91781, "lng": 151.2325};
           that.markers = [];
           for(var i in result){
-            // console.log(result[i]);
+            // //console.log(result[i]);
             that.markers.push({"position":{"lat":result[i].locationLatitude
               , "lng":result[i].locationLongitude,
                 "loc_name":result[i].locationName,
@@ -66,8 +66,8 @@
 
           }
 
-          // console.log(that.markers);
-          // console.log(this.all_events[0]);
+          // //console.log(that.markers);
+          // //console.log(this.all_events[0]);
         }
 
       });
@@ -79,14 +79,14 @@
       //
       //   success: function (result) {
       //     that.my_position = result.results[0].geometry.location;
-      //     console.log(that.my_position);
+      //     //console.log(that.my_position);
       //   }
       // });
       navigator.geolocation.getCurrentPosition(function(location) {
-        // console.log(location.coords.latitude);
-        // console.log(location.coords.longitude);
-        // console.log(location.coords.accuracy);
-        console.log(location);
+        // //console.log(location.coords.latitude);
+        // //console.log(location.coords.longitude);
+        // //console.log(location.coords.accuracy);
+        //console.log(location);
         that.my_position = {"lat":location.coords.latitude,"lng":location.coords.longitude};
       });
     },
@@ -121,20 +121,20 @@
     },
     methods:{
       map_tap:function (m) {
-        console.log(m.position);
+        //console.log(m.position);
         this.curr_loc = m.position;
         this.show_box = true;
       }
     },
     methods:{
       get_my_loc:function () {
-        console.log('get my');
+        //console.log('get my');
         var that = this
         navigator.geolocation.getCurrentPosition(function(location) {
-          // console.log(location.coords.latitude);
-          // console.log(location.coords.longitude);
-          // console.log(location.coords.accuracy);
-          console.log(location);
+          // //console.log(location.coords.latitude);
+          // //console.log(location.coords.longitude);
+          // //console.log(location.coords.accuracy);
+          //console.log(location);
           that.my_position = {"lat":location.coords.latitude,"lng":location.coords.longitude};
         });
       }

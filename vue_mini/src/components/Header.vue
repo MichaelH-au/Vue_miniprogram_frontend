@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div style="position: relative;overflow: hidden">
     <header class="header">
       {{head_title}}
     </header>
-    <a href="javascript:history.go(-1)">
+    <a href="javascript:history.go(-1)" class="return_link">
     <img src="../assets/images/down_arrow.png" class="return_btn" v-show="return_btu">
     </a>
   </div>
@@ -12,10 +12,11 @@
 <script>
   import {mapGetters,mapActions} from 'vuex'
   export default{
-    computed:mapGetters(["head_title","return_btu"]),
+    computed:mapGetters(["head_title","return_btu","user_id"]),
     watch:{
       $route(to){
         console.log("222233332");
+        console.log(this.user_id);
         console.log(to.query.type);
         if(to.path == "/activity"){
           this.$store.dispatch("activity");
@@ -39,18 +40,28 @@
 .header{
     /*position:fixed;*/
     width: 100vw;
+    max-width: 450px;
     background-color: #77D9C7;
     height: 50px;
     text-align: center;
     line-height: 50px;
     color: white;
 }
-  .return_btn{
-    position: fixed;
+  .return_link{
     width: 40px;
     height: 40px;
+    position: absolute;
     top:5px;
     left:10px;
+    z-index: 10;
+  }
+  .return_btn{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top:0px;
+    left:0px;
+    z-index: 10;
   }
 </style>
 

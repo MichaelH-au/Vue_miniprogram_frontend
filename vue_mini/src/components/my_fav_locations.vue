@@ -5,19 +5,19 @@
 
 
 
-    <div id="nav_bar">
-      <router-link to="/map">
-      <div class="nav_img">
-        <img src="../assets/images/map.png" alt="">
-      </div>
-      </router-link>
-      <ul>
-      <li v-for="(item) in category" class="items" @click="tclick">
-        {{item}}
-      </li>
-      </ul>
-      <!--<div style="clear: both"></div>-->
-    </div>
+    <!--<div id="nav_bar">-->
+      <!--<router-link to="/map">-->
+        <!--<div class="nav_img">-->
+          <!--<img src="../assets/images/map.png" alt="">-->
+        <!--</div>-->
+      <!--</router-link>-->
+      <!--<ul>-->
+        <!--<li v-for="(item) in category" class="items" @click="tclick">-->
+          <!--{{item}}-->
+        <!--</li>-->
+      <!--</ul>-->
+      <!--&lt;!&ndash;<div style="clear: both"></div>&ndash;&gt;-->
+    <!--</div>-->
     <div v-for="(item) in all_locations">
       <div class="event_box" v-if="all_cate">
         <router-link :to="{path:'/activity_detail',query:{Id:item.locationId,type:'loc'}}">
@@ -26,11 +26,6 @@
           <img src="../assets/images/CB.png" class="back_text"></img>
           <h3 class="item_title">{{item.locationName}}</h3>
           <span class="item_infos">{{item.locationIntro}}</span>
-          <div class="item_love">
-            <img src="../assets/images/favored.png" alt="">
-            <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-            <span v-else>0</span>
-          </div>
         </router-link>
       </div>
       <div class="event_box" v-else-if="item.locationType == curr_type">
@@ -40,11 +35,7 @@
           <img src="../assets/images/CB.png" class="back_text"></img>
           <h3 class="item_title">{{item.locationName}}</h3>
           <span class="item_infos">{{item.locationIntro}}</span>
-          <div class="item_love">
-            <img src="../assets/images/favored.png" alt="">
-            <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-            <span v-else>0</span>
-          </div>
+
         </router-link>
       </div>
     </div>
@@ -52,15 +43,15 @@
 </template>
 
 <script>
+  import {mapGetters,mapActions} from 'vuex'
   export default {
-    mounted(){
-      $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
-    },
+    computed:mapGetters(["head_title","return_btu","user_id"]),
     beforeMount(){
       //console.log("555");
       var that = this;
+      let url_path = "https://www.sharegotech.com/locations/user_love_locations_H5?userId=" + this.user_id  ;
       $.ajax({
-        url: "https://www.sharegotech.com/locations/getLocations",
+        url: url_path,
         type: "get",
         dataType: "json",
         async: false,

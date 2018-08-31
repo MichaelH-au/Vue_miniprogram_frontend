@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: auto;height: 82vh;border: 0px solid red;-webkit-overflow-scrolling: touch">
+  <div style="overflow: auto;height: 87vh;border: 0px solid red;-webkit-overflow-scrolling: touch;">
     <!--This is activity-->
 
     <ul id="nav_bar">
@@ -8,6 +8,19 @@
       </li>
       <!--<div style="clear: both"></div>-->
     </ul>
+    <div class="banner_box">
+      <div class="banner_block">
+        <ul id="banner_imgs">
+          <li v-for="(item) in banner">
+            <div class="banner_content"></div>
+            <p class="banner_title">{{item.eventName}}</p>
+            <p class="banner_time">{{item.eventTime}}</p>
+            <p class="banner_loc">{{item.eventLocation}}</p>
+            <img v-bind:src="item.eventImageUrl" class="banner_img">
+          </li>
+        </ul>
+      </div>
+    </div>
     <div v-for="(item) in all_events">
       <div class="event_box" v-if="all_cate">
         <router-link :to="{path:'/activity_detail',query:{Id:item.eventId}}">
@@ -15,7 +28,7 @@
         <div class="back_color"></div>
         <img src="../assets/images/CB.png" class="back_text"></img>
         <h3 class="item_title">{{item.eventName}}</h3>
-        <span class="item_info">{{item.eventTime}}</span>
+        <span class="item_info">{{item.eventIntro}}</span>
           <div class="item_love">
             <img src="../assets/images/favored.png" alt="">
             <span v-if="item.fav_number != null">{{item.fav_number}}</span>
@@ -43,14 +56,36 @@
 
 <script>
   export default {
-    beforeMount(){
-          console.log("555");
-      var that = this;
-      if (this.all_events){
-        console.log("have");
-      }else {
-        console.log("no have");
+    mounted(){
+      $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"})
+      let new_wid = $(".banner_img").eq(0).width();
+      //console.log(new_wid);
+      let silder = function () {
+        $("#banner_imgs").animate({marginLeft: -new_wid}, 800, function () {
+          $("#banner_imgs li").first().appendTo($("#banner_imgs"));
+          $("#banner_imgs").css("marginLeft", 0);
+        });
+      };
+      // silder();
+      this.timer = setInterval(silder,3500);
+      this.timer;
+
+    },
+    beforeDestroy() {
+      if(this.timer) { //如果定时器还在运行 或者直接关闭，不用判断
+        //console.log('clear timer')
+        clearInterval(this.timer); //关闭
       }
+    },
+    beforeMount(){
+
+      //console.log("555");
+      if (this.all_events){
+        //console.log("have");
+      }else {
+        //console.log("no have");
+      }
+      let that = this;
       $.ajax({
         url: "https://www.sharegotech.com/events/getUpcommingEvents_H5",
         type: "get",
@@ -59,13 +94,18 @@
 
         success: function (result) {
           // this.all_events = result.body;
-          // console.log(result);
-          that.all_events=result;
-          console.log(that.all_events);
-          // console.log(this.all_events[0]);
+          // //console.log(result);
+          //console.log(result);
+          that.all_events=result.events;
+          //console.log(that.all_events);
+          // //console.log(this.all_events[0]);
+
+          that.banner = result.banner;
+
         }
 
       });
+      console.log(this.banner);
     },
     data:function () {
       return {
@@ -74,38 +114,52 @@
         up_load:false,
         all_cate: true,
         curr_type:"",
+        banner:""
+
       }
     },
 
     methods: {
       tclick(e) {
 
-        // console.log(e.target.innerText);
+        // //console.log(e.target.innerText);
         // this.all = "bbb";
-        // console.log(this.all_events[0].urlPath);
-        // console.log(this.server_url);
+        // //console.log(this.all_events[0].urlPath);
+        // //console.log(this.server_url);
         if (e.target.innerText == this.category[0]){
-          console.log($(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          //console.log($(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
           this.all_cate = true;
         }else if(e.target.innerText == this.category[1]) {
-          console.log($(".items").eq(1).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          //console.log($(".items").eq(1).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
           this.all_cate = false;
           this.curr_type = "art entertainment";
         }else if(e.target.innerText == this.category[2]) {
-          console.log($(".items").eq(2).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          //console.log($(".items").eq(2).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
           this.all_cate = false;
           this.curr_type = "hard skill development";
         }else if(e.target.innerText == this.category[3]) {
-          console.log($(".items").eq(3).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          //console.log($(".items").eq(3).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
           this.all_cate = false;
           this.curr_type = "physical entertainment";
         }else if(e.target.innerText == this.category[4]) {
-          console.log($(".items").eq(4).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          //console.log($(".items").eq(4).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
           this.all_cate = false;
           this.curr_type = "soft skill development";
         }
-        console.log(this.curr_type);
+        //console.log(this.curr_type);
       },
+      slicer(){
+        $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"})
+        let new_wid = $(".banner_img").eq(0).width();
+        //console.log(new_wid);
+        let silder = function () {
+          $("#banner_imgs").animate({marginLeft: -new_wid}, 800, function () {
+            $("#banner_imgs li").first().appendTo($("#banner_imgs"));
+            $("#banner_imgs").css("marginLeft", 0);
+          });
+        };
+
+      }
     }
   }
 </script>
@@ -140,9 +194,11 @@
   }
 
   .event_box{
+    max-width: 400px;
     width:90vw;
-    margin-left: 5vw;
-    height: 33vh;
+
+    margin-left: 20px;
+    height: 40vh;
     /*border: 0.1px solid red;*/
     /*background: blue;*/
     position: relative;
@@ -179,7 +235,7 @@
   .item_title{
     width: 65%;
     left:17%;
-    top:32%;
+    top:34%;
     text-align: center;
     position: absolute;
     z-index: 7;
@@ -221,5 +277,103 @@
     margin-left: 10px;
     font-size: 14px;
     /*border: 1px solid red;*/
+  }
+  .banner_box{
+    max-width: 450px;
+    width: 100hv;
+    height: 250px;
+    /*border: 1px solid red;*/
+    position: relative;
+    overflow: hidden;
+    /*border: 1px solid red;*/
+    margin-top: 10px;
+  }
+  .banner_block{
+    /*clear: both;*/
+    height: 100%;
+    width:100%;
+
+    position: relative;
+    overflow: hidden;
+    display: inline;
+
+  }
+  #banner_imgs{
+    height: 100%;
+    width: auto;
+    display: inline-block;
+    white-space:nowrap;
+  }
+  /*#imgs li img{*/
+    /*height:230px;*/
+    /*max-width: 450;*/
+    /*width:92vw!important;*/
+    /*!*border-radius: 20px;*!*/
+  /*}*/
+  #banner_imgs li{
+    display: inline-block;
+    max-width: 450px;
+    height: 100%;
+    width:100vw!important;
+    position:relative;
+    /*margin-left: 10px;*/
+  }
+  .banner_img{
+    height:250px;
+    max-width: 450px;
+    width:100vw  !important;
+    /*display: none;*/
+    /*margin-left: -10px;*/
+    /*margin-left: 10px;*/
+    /*border-radius: 20px;*/
+    /*/*margin-top: 10px;*/
+  }
+  .banner_title{
+    position: absolute;
+    top:110px;
+    left:20px;
+    max-width: 450px;
+    white-space: normal;
+    width: 90vw;
+    /*border: 1px solid red;*/
+    color:white;
+    font-size: 22px;
+    font-weight: 300;
+    z-index: 2;
+  }
+  .banner_time{
+    position: absolute;
+    top:190px;
+    left:20px;
+    max-width: 450px;
+    white-space: normal;
+    width: 90vw;
+    /*border: 1px solid red;*/
+    color:white;
+    font-size: 14px;
+    font-weight: 300;
+    z-index: 2;
+  }
+  .banner_loc {
+    position: absolute;
+    top: 215px;
+    left: 20px;
+    max-width: 450px;
+    white-space: normal;
+    width: 90vw;
+    /*border: 1px solid red;*/
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    z-index: 2;
+  }
+
+  .banner_content{
+    height:250px;
+    max-width: 450px;
+    width:100vw  !important;
+    position: absolute;
+    background: linear-gradient(to bottom,rgba(0, 0, 0, 0),rgba(0, 0, 0, 1));
+    z-index: 1;
   }
 </style>

@@ -45,37 +45,37 @@
     },
     watch: {
       $route(to) {
-        console.log(to.query.type);
+        //console.log(to.query.type);
         if (to.path == "/activity") {
           this.act_img = require("../assets/images/event_b.png");
           this.dis_img=require('../assets/images/discovery_w.png');
           this.my_img=require('../assets/images/me_w.png');
-          console.log($('.foot_text:eq(0)').css("color","black"));
-          console.log($('.foot_text:not(:eq(0))').css("color","white"));
+          $('.foot_text:eq(0)').css("color","black");
+          $('.foot_text:not(:eq(0))').css("color","white");
         } else if (to.path == "/discovery") {
           this.act_img = require("../assets/images/event_w.png");
           this.dis_img=require('../assets/images/discovery_icon.png');
           this.my_img=require('../assets/images/me_w.png');
-          console.log($('.foot_text:eq(1)').css("color","black"));
-          console.log($('.foot_text:not(:eq(1))').css("color","white"));
+          $('.foot_text:eq(1)').css("color","black");
+          $('.foot_text:not(:eq(1))').css("color","white");
         } else if (to.path == "/myinfo") {
           this.act_img = require("../assets/images/event_w.png");
           this.dis_img=require('../assets/images/discovery_w.png');
           this.my_img=require('../assets/images/me_b.png');
-          console.log($('.foot_text:eq(2)').css("color","black"));
-          console.log($('.foot_text:not(:eq(2))').css("color","white"));
+          $('.foot_text:eq(2)').css("color","black");
+          $('.foot_text:not(:eq(2))').css("color","white");
         } else if (to.path == "/activity_detail" && typeof(to.query.type) == "undefined") {
           this.act_img = require("../assets/images/event_b.png");
           this.dis_img=require('../assets/images/discovery_w.png');
           this.my_img=require('../assets/images/me_w.png');
-          console.log($('.foot_text:eq(0)').css("color","black"));
-          console.log($('.foot_text:not(:eq(0))').css("color","white"));
+          $('.foot_text:eq(0)').css("color","black");
+          $('.foot_text:not(:eq(0))').css("color","white");
         } else if (to.path == "/activity_detail" && to.query.type == "loc") {
           this.act_img = require("../assets/images/event_w.png");
           this.dis_img=require('../assets/images/discovery_icon.png');
           this.my_img=require('../assets/images/me_w.png');
-          console.log($('.foot_text:eq(1)').css("color","black"));
-          console.log($('.foot_text:not(:eq(1))').css("color","white"));
+          $('.foot_text:eq(1)').css("color","black");
+          $('.foot_text:not(:eq(1))').css("color","white");
         }
         // else if (to.path == "/activity_detail" and to.query())
 
@@ -89,6 +89,7 @@
   #footer{
     position: fixed;
     width: 100vw;
+    max-width: 450px;
     background-color: #77D9C7;
     height: 50px;
     top:100%;

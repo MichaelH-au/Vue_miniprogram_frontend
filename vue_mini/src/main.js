@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueResource from 'vue-resource'
 import $ from './assets/js/jquery-3.2.1';
+import VueKeepScrollPosition from 'vue-keep-scroll-position'
+Vue.use(VueKeepScrollPosition);
 
 window.jQuery = $;
 window.$ = $;
@@ -29,7 +31,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 new Vue({

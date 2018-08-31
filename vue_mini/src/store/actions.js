@@ -13,5 +13,11 @@ export default{
   },
   loc_detail({commit}){
     commit("loc_detail")
-  }
+  },
+  user_url({commit}){
+    commit("user_url")
+  },
+  position({commit}){
+    commit("position")
+  },
 }

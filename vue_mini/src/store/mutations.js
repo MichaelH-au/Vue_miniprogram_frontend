@@ -1,7 +1,9 @@
 import getters from './getters'
 const state = {
   head_title : "热门活动",
-  return_btu:false
+  return_btu:false,
+  user_id:0,
+  position:0
 }
 
 const mutations = {
@@ -25,6 +27,12 @@ const mutations = {
   loc_detail(state){
     state.head_title = "地点详情";
     state.return_btu = true;
+  },
+  update_id(state,id){
+    state.user_id = id;
+  },
+  position(state,pos){
+    state.position = pos;
   }
 }
 
