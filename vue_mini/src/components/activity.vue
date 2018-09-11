@@ -24,29 +24,68 @@
     <div v-for="(item) in all_events">
       <div class="event_box" v-if="all_cate">
         <router-link :to="{path:'/activity_detail',query:{Id:item.eventId}}">
-        <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
-        <div class="back_color"></div>
-        <img src="../assets/images/CB.png" class="back_text"></img>
-        <h3 class="item_title">{{item.eventName}}</h3>
-        <span class="item_info">{{item.eventIntro}}</span>
-          <div class="item_love">
-            <img src="../assets/images/favored.png" alt="">
-            <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-            <span v-else>0</span>
+          <div class="img_box">
+            <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
           </div>
+          <div class="item_bottom">
+            <div class="item_bot_left">
+              <h3 class="item_title">{{item.eventName}}</h3>
+              <span class="item_info">{{item.eventIntro}}</span>
+            </div>
+            <div class="item_middle"></div>
+            <div class="item_bot_right">
+              <ul class="item_ul">
+                <li class="item_li">
+                  <div class="item_love">
+                    <img src="../assets/images/like-3.svg.png" alt="">
+                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
+                    <span v-else>0</span>
+                  </div>
+                </li>
+                <li class="item_li">{{item.eventPrice}}</li>
+                <li class="item_li">
+                  <!--{{rate_images[item.eventRating]}}-->
+                  <img class="act_item_start" v-bind:src="rate_images[item.eventRating]" alt="">
+                </li>
+              </ul>
+            </div>
+          </div>
+        <!--<div class="back_color"></div>-->
+        <!--<img src="../assets/images/CB.png" class="back_text"></img>-->
+          <!--<div class="item_love">-->
+            <!--<img src="../assets/images/favored.png" alt="">-->
+            <!--<span v-if="item.fav_number != null">{{item.fav_number}}</span>-->
+            <!--<span v-else>0</span>-->
+          <!--</div>-->
         </router-link>
       </div>
       <div class="event_box" v-else-if="item.eventType == curr_type">
         <router-link :to="{path:'/activity_detail',query:{Id:item.eventId}}">
-      <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
-      <div class="back_color"></div>
-      <img src="../assets/images/CB.png" class="back_text"></img>
-      <h3 class="item_title">{{item.eventName}}</h3>
-      <span class="item_info">{{item.eventTime}}</span>
-          <div class="item_love">
-            <img src="../assets/images/favored.png" alt="">
-            <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-            <span v-else>0</span>
+          <div class="img_box">
+            <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
+          </div>
+          <div class="item_bottom">
+            <div class="item_bot_left">
+              <h3 class="item_title">{{item.eventName}}</h3>
+              <span class="item_info">{{item.eventIntro}}</span>
+            </div>
+            <div class="item_middle"></div>
+            <div class="item_bot_right">
+              <ul class="item_ul">
+                <li class="item_li">
+                  <div class="item_love">
+                    <img src="../assets/images/like-3.svg.png" alt="">
+                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
+                    <span v-else>0</span>
+                  </div>
+                </li>
+                <li class="item_li">{{item.eventPrice}}</li>
+                <li class="item_li">
+                  <!--{{rate_images[item.eventRating]}}-->
+                  <img class="act_item_start" v-bind:src="rate_images[item.eventRating]" alt="">
+                </li>
+              </ul>
+            </div>
           </div>
         </router-link>
       </div>
@@ -100,10 +139,31 @@
           // //console.log(result);
           //console.log(result);
           that.all_events=result.events;
-          //console.log(that.all_events);
+          // console.log(that.all_events);
           // //console.log(this.all_events[0]);
 
           that.banner = result.banner;
+          for (let i in that.all_events){
+            console.log(that.all_events[i])
+
+
+            let fav_num = that.all_events[i].fav_number;
+            if (fav_num <= 10){
+              that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }else if(fav_num <= 100){
+              that.all_events[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }else {
+              that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }
+
+            let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
+            newRating = Math.round(newRating);
+            newRating = (newRating > 5)?5:newRating;
+            newRating = (newRating < 1)?1:newRating;
+            // console.log(newRating);
+            that.all_events[i].eventRating = newRating - 1;
+
+          }
 
         }
 
@@ -118,7 +178,12 @@
         all_cate: true,
         curr_type:"",
         banner:"",
-        current_position:0
+        current_position:0,
+        rate_images:[require('../assets/images/6.png'),
+                     require('../assets/images/7.png'),
+                     require('../assets/images/8.png'),
+                     require('../assets/images/9.png'),
+                     require('../assets/images/10.png')]
 
       }
     },
@@ -129,10 +194,6 @@
       },
       tclick(e) {
 
-        // //console.log(e.target.innerText);
-        // this.all = "bbb";
-        // //console.log(this.all_events[0].urlPath);
-        // //console.log(this.server_url);
         if (e.target.innerText == this.category[0]){
           $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = true;
@@ -171,6 +232,12 @@
   }
 </script>
 <style scoped>
+
+  @font-face {
+  font-family: 'yuanjian';
+  src: url('../assets/fonts/yuanjian.ttf');
+  }
+
   .header{
     width: 100vw;
     background-color: #77D9C7;
@@ -209,8 +276,10 @@
     width:90vw;
 
     margin-left: 20px;
-    height: 40vh;
-    /*border: 0.1px solid red;*/
+    height: 45vh;
+    border: 2px solid gainsboro;
+    border-radius: 10px;
+    box-shadow: 1 1 0 1;
     /*background: blue;*/
     position: relative;
     margin-top: 18px;
@@ -228,10 +297,9 @@
     border-radius: 10px;
   }
   .act_item_img{
-    position: absolute;
-    width: 96%;
-    height: 80%;
-    z-index: 5;
+    position: relative;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
   }
   .back_text{
@@ -245,49 +313,50 @@
 
   .item_title{
     width: 65%;
-    left:17%;
-    top:40%;
-    transform:translateY(-50%);
-    text-align: center;
-    position: absolute;
-    z-index: 7;
+    text-align: left;
     color:black;
+    margin-left: 10px;
+    margin-top: 2px;
   }
 
   .item_info{
     width: 100%;
-    text-align: center;
+    text-align: left;
     display: block;
-    position: absolute;
-    top:87%;
-    border-bottom: 1px solid gainsboro;
     color:black;
+    margin-left: 10px;
+    font-size: 13px;
+    margin-top: 2px;
+    line-height: 3vh;
+    /*border: 1px solid white;*/
+
   }
   .item_love{
-    position: absolute;
-    width: 60px;
-    height: 20px;
+    width: auto;
+    height: 100%;
     /*border: 1px solid red;*/
-    left:75%;
-    top:68%;
-    z-index: 9;
     border-radius: 5px;
-    background-color: rgba(255,255,255,.7);;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
   }
   .item_love img{
-    margin-top: 2px;
-    margin-left: 5px;
     width: 17px;
     height: 17px;
-    float: left;
+    /*float: left;*/
+    /*display: inline-block;*/
     /*display: inline-block;*/
   }
   .item_love span {
-    float: left;
     /*display: inline-block;*/
-    margin-top: 2px;
-    margin-left: 10px;
-    font-size: 14px;
+    width: auto;
+    font-size: 20px;
+
+    margin-left: 3px;
+    /*left:50%;*/
+    /*line-height: 28px;*/
+
     /*border: 1px solid red;*/
   }
   .banner_box{
@@ -387,5 +456,71 @@
     position: absolute;
     background: linear-gradient(to bottom,rgba(0, 0, 0, 0),rgba(0, 0, 0, 1));
     z-index: 1;
+  }
+
+  .img_box{
+    width: 100%;
+    height: 75%;
+    /*border:1px solid red;*/
+  }
+
+  .item_bottom{
+    width: 100%;
+    height: 25%;
+    /*background-color: lavender;*/
+  }
+
+  .item_bot_left{
+    height: 100%;
+    width: 66%;
+    /*background-color: red;*/
+    font-family: yuanjian;
+    line-height: 26px;
+    float: left;
+  }
+  .item_middle{
+    width: 1px;
+    height: 80%;
+    border-left: 1px solid gainsboro;
+    margin-top: 2%;
+    float: left;
+  }
+  .item_bot_right{
+    height: 100%;
+    width: 33.3%;
+    /*background-color: blue;*/
+    float: left;
+    text-align: center;
+  }
+
+  .item_ul{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .item_li{
+    width: 70%;
+    height: 31%;
+    border: 1px solid white;
+    list-style: none;
+    margin-left: 15%;
+    font-size: 18px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-family: yuanjian;
+    color: black;
+
+    border-bottom: 1px solid gainsboro;
+  }
+
+  .item_li:last-child{
+    border-bottom: 0px solid gainsboro;
+  }
+
+  .act_item_start{
+    width: 100%;
+    height: 60%;
   }
 </style>
