@@ -10,14 +10,14 @@
         :draggable="false"
         @click="map_tap(m)"
       />
-      <GmapMarker v-bind:key="100"
-                  v-bind:position="my_position"
-                  v-bind:clickable="true"
-                  v-bind:icon="my_loc"
+      <!--<GmapMarker v-bind:key="100"-->
+                  <!--v-bind:position="my_position"-->
+                  <!--v-bind:clickable="true"-->
+                  <!--v-bind:icon="my_loc"-->
 
-                  :draggable="true"
-                  @click="map_tap(m)"
-      />
+                  <!--:draggable="true"-->
+                  <!--@click="map_tap(m)"-->
+      <!--/>-->
     </GmapMap>
     <img src="../assets/images/ispintap.png" class="my_loc" @click="get_my_loc">
     <router-link to="/discovery">
@@ -124,9 +124,7 @@
         //console.log(m.position);
         this.curr_loc = m.position;
         this.show_box = true;
-      }
-    },
-    methods:{
+      },
       get_my_loc:function () {
         //console.log('get my');
         var that = this

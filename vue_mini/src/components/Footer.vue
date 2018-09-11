@@ -42,7 +42,30 @@
     },
     mounted:function () {
       $('.foot_text:eq(0)').css("color","black");
+      // var height = $(window).height();
+      // var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+      // console.log(userAgent);
+      // if (userAgent.indexOf("Chrome") > -1) {
+        //console.log()
+      // }else if(userAgent.indexOf("Safari") > -1) { //判断是否Safari浏览器
+      //   window.addEventListener('scroll', this.handleScroll);
+      // }
+
+      // $('#footer').css('top',height);
     },
+    // methods:{
+    //
+    //   handleScroll () {
+    //     var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    //     var height = $(window).height() + 'px';
+    //     let test2 = window.innerHeight + 'px';
+    //
+    //     if ($('#footer').css('top') != test2){
+    //       // alert(1);
+    //       $('#footer').css('top',test2);
+    //     }
+    //   },
+    // },
     watch: {
       $route(to) {
         //console.log(to.query.type);

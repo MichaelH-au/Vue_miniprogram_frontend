@@ -78,6 +78,12 @@
         type:""
       }
     },
+    beforeDestroy() {
+      if(this.timer) { //如果定时器还在运行 或者直接关闭，不用判断
+        //console.log('clear timer')
+        clearInterval(this.timer); //关闭
+      }
+    },
     computed:mapGetters(["head_title","return_btu","user_id"]),
     methods:{
       add_fav:function () {
@@ -253,7 +259,7 @@
           }
           //console.log(dot_content);
           $("#image_dot").html(dot_content);
-          $("#image_dot li").eq(0).find('div').css("background-color","#FAD1A9").siblings().css("background-color","white");
+          $("#image_dot li").eq(0).find('div').css({"background-color":"white",'width':'12px','height':'12px'}).siblings().css("background-color","white");
           if (width > 450){
             let curr_width = width;
             width = 450;
@@ -423,10 +429,9 @@
       //console.log('###############');
       //console.log(width);
       let new_wid = $("#first_img").eq(0).width();
-      document.querySelector('#img_win').addEventListener('touchend',function () {
-
-        if(Math.abs(deltaX) >= 40 && slider_enable){
-          if(deltaX>0){
+      let slider_fun = function () {
+        if(Math.abs(deltaX) >= 40 && slider_enable) {
+          if (deltaX > 0) {
             //console.log('you swiped right');
             $("#imgs li").last().prependTo($("#imgs"));
             //console.log("#######");
@@ -435,7 +440,7 @@
             });
             img_index -= 1;
           }
-          else{
+          else {
             //console.log('you swiped left');
             $("#imgs").animate({marginLeft: -new_wid}, 500, function () {
               $("#imgs li").first().appendTo($("#imgs"));
@@ -444,18 +449,51 @@
             img_index += 1;
           }
           //console.log(img_index);
-          for (let i = 0; i < window.num_imgs;i++){
-            if(img_index % window.num_imgs == i){
-              $("#image_dot li").eq(i).find('div').css("background-color","#FAD1A9").siblings().css("background-color","white");
-              $("#image_dot li").eq(i).siblings().find('div').css("background-color","white");
+          for (let i = 0; i < window.num_imgs; i++) {
+            if (img_index % window.num_imgs == i) {
+              $("#image_dot li").eq(i).find('div').css({
+                "background-color": "white",
+                'width': '12px',
+                'height': '12px'
+              }).siblings().css({"background-color": "white", 'width': '8px', 'height': '8px'});
+              $("#image_dot li").eq(i).siblings().find('div').css({
+                "background-color": "white",
+                'width': '8px',
+                'height': '8px'
+              });
 
             }
 
           }
         }
-      },false);
+      }
+      document.querySelector('#img_win').addEventListener('touchend',slider_fun,false);
 
+      let slider_change = function () {
+        $("#imgs").animate({marginLeft: -new_wid}, 500, function () {
+          $("#imgs li").first().appendTo($("#imgs"));
+          $("#imgs").css("marginLeft", 0);
+        });
+        img_index += 1;
+        for (let i = 0; i < window.num_imgs; i++) {
+          if (img_index % window.num_imgs == i) {
+            $("#image_dot li").eq(i).find('div').css({
+              "background-color": "white",
+              'width': '12px',
+              'height': '12px'
+            }).siblings().css({"background-color": "white", 'width': '8px', 'height': '8px'});
+            $("#image_dot li").eq(i).siblings().find('div').css({
+              "background-color": "white",
+              'width': '8px',
+              'height': '8px'
+            });
 
+          }
+
+        }
+      }
+      this.timer = setInterval(slider_change,2500);
+      this.timer;
 
 
       // show code function

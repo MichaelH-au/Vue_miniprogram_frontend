@@ -1,9 +1,9 @@
 <template>
-  <div style="overflow: auto;height: 87vh;border: 0px solid red;-webkit-overflow-scrolling: touch;">
+  <div id='active_container'style="overflow: auto;height: 87vh;border: 0px solid red;-webkit-overflow-scrolling: touch;">
     <!--This is activity-->
 
     <ul id="nav_bar">
-      <li v-for="(item) in category" class="items" @click="tclick">
+      <li v-for="(item,index) in category" v-bind:class="index==0?'items active':'items'" @click="tclick">
         {{item}}
       </li>
       <!--<div style="clear: both"></div>-->
@@ -55,8 +55,11 @@
 </template>
 
 <script>
+
   export default {
     mounted(){
+      console.log('start');
+      window.addEventListener('scroll', this.handleScroll);
       $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"})
       let new_wid = $(".banner_img").eq(0).width();
       //console.log(new_wid);
@@ -114,12 +117,16 @@
         up_load:false,
         all_cate: true,
         curr_type:"",
-        banner:""
+        banner:"",
+        current_position:0
 
       }
     },
 
     methods: {
+      handleScroll () {
+        this.current_position = $(document).scrollTop();
+      },
       tclick(e) {
 
         // //console.log(e.target.innerText);
@@ -127,22 +134,22 @@
         // //console.log(this.all_events[0].urlPath);
         // //console.log(this.server_url);
         if (e.target.innerText == this.category[0]){
-          //console.log($(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = true;
         }else if(e.target.innerText == this.category[1]) {
-          //console.log($(".items").eq(1).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(1).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "art entertainment";
         }else if(e.target.innerText == this.category[2]) {
-          //console.log($(".items").eq(2).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(2).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "hard skill development";
         }else if(e.target.innerText == this.category[3]) {
-          //console.log($(".items").eq(3).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(3).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "physical entertainment";
         }else if(e.target.innerText == this.category[4]) {
-          //console.log($(".items").eq(4).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(4).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "soft skill development";
         }
@@ -192,6 +199,10 @@
     display: inline-block;
     line-height: 50px;
   }
+  .active{
+    color:#77D9C7;
+    border-bottom:2px solid #77D9C7;
+  }
 
   .event_box{
     max-width: 400px;
@@ -235,7 +246,8 @@
   .item_title{
     width: 65%;
     left:17%;
-    top:34%;
+    top:40%;
+    transform:translateY(-50%);
     text-align: center;
     position: absolute;
     z-index: 7;

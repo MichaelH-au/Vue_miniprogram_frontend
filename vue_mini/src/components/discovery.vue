@@ -12,7 +12,7 @@
       </div>
       </router-link>
       <ul>
-      <li v-for="(item) in category" class="items" @click="tclick">
+      <li v-for="(item,index) in category" v-bind:class="index==0?'items active':'items'" @click="tclick">
         {{item}}
       </li>
       </ul>
@@ -94,14 +94,14 @@
         // //console.log(this.all_events[0].urlPath);
         // //console.log(this.server_url);
         if (e.target.innerText == this.category[0]){
-          //console.log($(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = true;
         }else if(e.target.innerText == this.category[1]) {
-          //console.log($(".items").eq(1).css({"color":"#77D9C7","border-bottom":"5px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(1).css({"color":"#77D9C7","border-bottom":"5px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "urban location";
         }else if(e.target.innerText == this.category[2]) {
-          //console.log($(".items").eq(2).css({"color":"#77D9C7","border-bottom":"5px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"}));
+          $(".items").eq(2).css({"color":"#77D9C7","border-bottom":"5px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
           this.all_cate = false;
           this.curr_type = "nature location";
         }
@@ -154,7 +154,10 @@
     line-height: 46px;
     list-style: none;
   }
-
+  .active{
+    color:#77D9C7;
+    border-bottom:2px solid #77D9C7;
+  }
   .event_box{
     max-width: 400px;
     width:90vw;
