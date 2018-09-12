@@ -187,16 +187,7 @@
     /*src: url('../assets/fonts/yuanjian.ttf');*/
   /*}*/
 
-  .header{
-    width: 100vw;
-    background-color: #77D9C7;
-    position:fixed;
-    height: 70px;
-    text-align: center;
-    line-height: 70px;
-    color: white;
-    z-index: 10;
-  }
+
   #nav_bar{
     /*border: 1px solid red;*/
     width: 400px;

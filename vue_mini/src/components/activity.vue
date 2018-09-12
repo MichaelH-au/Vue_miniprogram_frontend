@@ -228,7 +228,7 @@
     }
   }
 </script>
-<style scped>
+<style scoped>
 
   @import '../assets/css/list.css';
 
@@ -237,18 +237,9 @@
   /*src: url('../assets/fonts/yuanjian.ttf');*/
   /*}*/
 
-  .header{
-    width: 100vw;
-    background-color: #77D9C7;
-    position:fixed;
-    height: 70px;
-    text-align: center;
-    line-height: 70px;
-    color: white;
-    z-index: 10;
-  }
   #nav_bar{
     /*border: 1px solid red;*/
+    position: relative;
     width: 400px;
     height: 50px;
     overflow-x: auto;
@@ -256,7 +247,15 @@
     white-space: nowrap;
   }
 
+  .items{
+    width: 100px;
+    height: 94%;
+    text-align: center;
+    /*border: 1px solid red;*/
 
+    display: inline-block;
+    line-height: 50px;
+  }
 
   .event_box{
     max-width: 400px;

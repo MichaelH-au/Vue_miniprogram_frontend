@@ -19,7 +19,7 @@
       <!--&lt;!&ndash;<div style="clear: both"></div>&ndash;&gt;-->
     <!--</div>-->
     <div v-for="(item) in all_locations">
-      <div class="event_box" v-if="all_cate">
+      <div class="loc_box" v-if="all_cate">
         <router-link :to="{path:'/activity_detail',query:{Id:item.locationId,type:'loc'}}">
           <div class="img_box">
             <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
@@ -32,13 +32,13 @@
             <div class="item_middle"></div>
             <div class="item_bot_right">
               <ul class="item_ul">
-                <li class="item_li">
-                  <div class="item_love">
-                    <img src="../assets/images/like-3.svg.png" alt="">
-                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-                    <span v-else>0</span>
-                  </div>
-                </li>
+                <!--<li class="item_li">-->
+                  <!--<div class="item_love">-->
+                    <!--<img src="../assets/images/like-3.svg.png" alt="">-->
+                    <!--<span v-if="item.fav_number != null">{{item.fav_number}}</span>-->
+                    <!--<span v-else>0</span>-->
+                  <!--</div>-->
+                <!--</li>-->
                 <li class="item_li">
                   <!--{{rate_images[item.eventRating]}}-->
                   <img class="act_item_start" v-bind:src="rate_images[item.locationRating]" alt="">
@@ -48,7 +48,7 @@
           </div>
         </router-link>
       </div>
-      <div class="event_box" v-else-if="item.locationType == curr_type">
+      <div class="loc_box" v-else-if="item.locationType == curr_type">
         <router-link :to="{path:'/activity_detail',query:{Id:item.locationId,type:'loc'}}">
           <div class="img_box">
             <img  v-bind:src="server_url + item.urlPath"  alt="" class="act_item_img">
@@ -61,13 +61,13 @@
             <div class="item_middle"></div>
             <div class="item_bot_right">
               <ul class="item_ul">
-                <li class="item_li">
-                  <div class="item_love">
-                    <img src="../assets/images/like-3.svg.png" alt="">
-                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-                    <span v-else>0</span>
-                  </div>
-                </li>
+                <!--<li class="item_li">-->
+                  <!--<div class="item_love">-->
+                    <!--<img src="../assets/images/like-3.svg.png" alt="">-->
+                    <!--<span v-if="item.fav_number != null">{{item.fav_number}}</span>-->
+                    <!--<span v-else>0</span>-->
+                  <!--</div>-->
+                <!--</li>-->
                 <li class="item_li">
                   <!--{{rate_images[item.eventRating]}}-->
                   <img class="act_item_start" v-bind:src="rate_images[item.locationRating]" alt="">
@@ -100,26 +100,26 @@
           // this.all_events = result.body;
           //console.log(result);
           that.all_locations=result;
-          for (let i in that.all_locations){
-            console.log(that.all_locations[i]);
-            let newRating = 3 + (that.all_locations[i].locationRating - 5) / 5 + (that.all_locations[i].fav_number - 5) / 5;
-            newRating = Math.round(newRating);
-            newRating = (newRating > 5)?5:newRating;
-            newRating = (newRating < 1)?1:newRating;
-            console.log(newRating);
-
-            that.all_locations[i].locationRating = newRating - 1;
-            let fav_num = that.all_locations[i].fav_number;
-            if (fav_num <= 10){
-              that.all_locations[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
-            }else if(fav_num <= 100){
-              that.all_locations[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
-            }else {
-              that.all_locations[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
-            }
-
-
-          }
+          // for (let i in that.all_locations){
+          //   console.log(that.all_locations[i]);
+          //   let newRating = 3 + (that.all_locations[i].locationRating - 5) / 5 + (that.all_locations[i].fav_number - 5) / 5;
+          //   newRating = Math.round(newRating);
+          //   newRating = (newRating > 5)?5:newRating;
+          //   newRating = (newRating < 1)?1:newRating;
+          //   console.log(newRating);
+          //
+          //   that.all_locations[i].locationRating = newRating - 1;
+          //   // let fav_num = that.all_locations[i].fav_number;
+          //   // if (fav_num <= 10){
+          //   //   that.all_locations[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+          //   // }else if(fav_num <= 100){
+          //   //   that.all_locations[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+          //   // }else {
+          //   //   that.all_locations[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+          //   // }
+          //
+          //
+          // }
           // //console.log(this.all_events[0]);
         }
 
@@ -132,6 +132,11 @@
         up_load:false,
         all_cate: true,
         curr_type:"",
+        rate_images:[require('../assets/images/6.png'),
+          require('../assets/images/7.png'),
+          require('../assets/images/8.png'),
+          require('../assets/images/9.png'),
+          require('../assets/images/10.png')]
       }
     },
 
@@ -166,16 +171,7 @@
     /*src: url('../assets/fonts/yuanjian.ttf');*/
   /*}*/
 
-  .header{
-    width: 100vw;
-    background-color: #77D9C7;
-    position:fixed;
-    height: 70px;
-    text-align: center;
-    line-height: 70px;
-    color: white;
-    z-index: 10;
-  }
+
   #nav_bar{
     /*border: 1px solid red;*/
     width: 400px;

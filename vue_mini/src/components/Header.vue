@@ -39,6 +39,8 @@
 <style>
 .header{
     /*position:fixed;*/
+    /*position: relative;*/
+  /*display: none;*/
     width: 100vw;
     max-width: 450px;
     background-color: #77D9C7;

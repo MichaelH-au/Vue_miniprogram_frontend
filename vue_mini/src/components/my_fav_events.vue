@@ -22,13 +22,13 @@
             <div class="item_middle"></div>
             <div class="item_bot_right">
               <ul class="item_ul">
-                <li class="item_li">
-                  <div class="item_love">
-                    <img src="../assets/images/like-3.svg.png" alt="">
-                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-                    <span v-else>0</span>
-                  </div>
-                </li>
+                <!--<li class="item_li">-->
+                  <!--<div class="item_love">-->
+                    <!--<img src="../assets/images/like-3.svg.png" alt="">-->
+                    <!--<span v-if="item.fav_number != null">{{item.fav_number}}</span>-->
+                    <!--<span v-else>0</span>-->
+                  <!--</div>-->
+                <!--</li>-->
                 <li class="item_li">{{item.eventPrice}}</li>
                 <li class="item_li">
                   <!--{{rate_images[item.eventRating]}}-->
@@ -52,13 +52,13 @@
             <div class="item_middle"></div>
             <div class="item_bot_right">
               <ul class="item_ul">
-                <li class="item_li">
-                  <div class="item_love">
-                    <img src="../assets/images/like-3.svg.png" alt="">
-                    <span v-if="item.fav_number != null">{{item.fav_number}}</span>
-                    <span v-else>0</span>
-                  </div>
-                </li>
+                <!--<li class="item_li">-->
+                  <!--<div class="item_love">-->
+                    <!--<img src="../assets/images/like-3.svg.png" alt="">-->
+                    <!--<span v-if="item.fav_number != null">{{item.fav_number}}</span>-->
+                    <!--<span v-else>0</span>-->
+                  <!--</div>-->
+                <!--</li>-->
                 <li class="item_li">{{item.eventPrice}}</li>
                 <li class="item_li">
                   <!--{{rate_images[item.eventRating]}}-->
@@ -98,24 +98,24 @@
           // this.all_events = result.body;
           // //console.log(result);
           that.all_events=result;
-          for (let i in that.all_events){
-            let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
-            newRating = Math.round(newRating);
-            newRating = (newRating > 5)?5:newRating;
-            newRating = (newRating < 1)?1:newRating;
-            // console.log(newRating);
-            that.all_events[i].eventRating = newRating - 1;
-            let fav_num = that.all_events[i].fav_number;
-            if (fav_num <= 10){
-              that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
-            }else if(fav_num <= 100){
-              that.all_events[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
-            }else {
-              that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
-            }
-
-
-          }
+          // for (let i in that.all_events){
+          //   let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
+          //   newRating = Math.round(newRating);
+          //   newRating = (newRating > 5)?5:newRating;
+          //   newRating = (newRating < 1)?1:newRating;
+          //   // console.log(newRating);
+          //   that.all_events[i].eventRating = newRating - 1;
+          //   // let fav_num = that.all_events[i].fav_number;
+          //   // if (fav_num <= 10){
+          //   //   that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+          //   // }else if(fav_num <= 100){
+          //   //   that.all_events[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+          //   // }else {
+          //   //   that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+          //   // }
+          //
+          //
+          // }
           //console.log(that.all_events);
           // //console.log(this.all_events[0]);
         }
@@ -129,6 +129,11 @@
         up_load:false,
         all_cate: true,
         curr_type:"",
+        rate_images:[require('../assets/images/6.png'),
+          require('../assets/images/7.png'),
+          require('../assets/images/8.png'),
+          require('../assets/images/9.png'),
+          require('../assets/images/10.png')]
       }
     },
 
@@ -166,16 +171,7 @@
 </script>
 <style scoped>
 
-  .header{
-    width: 100vw;
-    background-color: #77D9C7;
-    position:fixed;
-    height: 70px;
-    text-align: center;
-    line-height: 70px;
-    color: white;
-    z-index: 10;
-  }
+
   #nav_bar{
     /*border: 1px solid red;*/
     width: 400px;
