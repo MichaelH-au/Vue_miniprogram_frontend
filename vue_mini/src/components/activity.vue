@@ -144,9 +144,12 @@
 
           that.banner = result.banner;
           for (let i in that.all_events){
-            console.log(that.all_events[i])
-
-
+            let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
+            newRating = Math.round(newRating);
+            newRating = (newRating > 5)?5:newRating;
+            newRating = (newRating < 1)?1:newRating;
+            // console.log(newRating);
+            that.all_events[i].eventRating = newRating - 1;
             let fav_num = that.all_events[i].fav_number;
             if (fav_num <= 10){
               that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
@@ -156,12 +159,6 @@
               that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
             }
 
-            let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
-            newRating = Math.round(newRating);
-            newRating = (newRating > 5)?5:newRating;
-            newRating = (newRating < 1)?1:newRating;
-            // console.log(newRating);
-            that.all_events[i].eventRating = newRating - 1;
 
           }
 
@@ -231,12 +228,14 @@
     }
   }
 </script>
-<style scoped>
+<style scped>
 
-  @font-face {
-  font-family: 'yuanjian';
-  src: url('../assets/fonts/yuanjian.ttf');
-  }
+  @import '../assets/css/list.css';
+
+  /*@font-face {*/
+  /*font-family: 'yuanjian';*/
+  /*src: url('../assets/fonts/yuanjian.ttf');*/
+  /*}*/
 
   .header{
     width: 100vw;
@@ -257,19 +256,7 @@
     white-space: nowrap;
   }
 
-  .items{
-    width: 100px;
-    height: 94%;
-    text-align: center;
-    /*border: 1px solid red;*/
 
-    display: inline-block;
-    line-height: 50px;
-  }
-  .active{
-    color:#77D9C7;
-    border-bottom:2px solid #77D9C7;
-  }
 
   .event_box{
     max-width: 400px;
@@ -284,81 +271,15 @@
     position: relative;
     margin-top: 18px;
   }
-  .back_color{
-    width: 96%;
-    margin-left: 10px;
-    margin-top: 10px;
-    position: absolute;
-    height: 80%;
-    background-color: #77d9c7;
-    opacity: 0.3;
-    box-shadow: 4px 4px 1px 0.1px #aaa;
-    z-index: 1;
-    border-radius: 10px;
-  }
+
   .act_item_img{
     position: relative;
     width: 100%;
     height: 100%;
     border-radius: 10px;
   }
-  .back_text{
-    position: absolute;
-    width: 80%;
-    height: 60%;
-    left:10%;
-    top:10%;
-    z-index: 6;
-  }
 
-  .item_title{
-    width: 65%;
-    text-align: left;
-    color:black;
-    margin-left: 10px;
-    margin-top: 2px;
-  }
 
-  .item_info{
-    width: 100%;
-    text-align: left;
-    display: block;
-    color:black;
-    margin-left: 10px;
-    font-size: 13px;
-    margin-top: 2px;
-    line-height: 3vh;
-    /*border: 1px solid white;*/
-
-  }
-  .item_love{
-    width: auto;
-    height: 100%;
-    /*border: 1px solid red;*/
-    border-radius: 5px;
-    text-align: center;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .item_love img{
-    width: 17px;
-    height: 17px;
-    /*float: left;*/
-    /*display: inline-block;*/
-    /*display: inline-block;*/
-  }
-  .item_love span {
-    /*display: inline-block;*/
-    width: auto;
-    font-size: 20px;
-
-    margin-left: 3px;
-    /*left:50%;*/
-    /*line-height: 28px;*/
-
-    /*border: 1px solid red;*/
-  }
   .banner_box{
     max-width: 450px;
     width: 100hv;
@@ -458,69 +379,4 @@
     z-index: 1;
   }
 
-  .img_box{
-    width: 100%;
-    height: 75%;
-    /*border:1px solid red;*/
-  }
-
-  .item_bottom{
-    width: 100%;
-    height: 25%;
-    /*background-color: lavender;*/
-  }
-
-  .item_bot_left{
-    height: 100%;
-    width: 66%;
-    /*background-color: red;*/
-    font-family: yuanjian;
-    line-height: 26px;
-    float: left;
-  }
-  .item_middle{
-    width: 1px;
-    height: 80%;
-    border-left: 1px solid gainsboro;
-    margin-top: 2%;
-    float: left;
-  }
-  .item_bot_right{
-    height: 100%;
-    width: 33.3%;
-    /*background-color: blue;*/
-    float: left;
-    text-align: center;
-  }
-
-  .item_ul{
-    width: 100%;
-    height: 100%;
-    text-align: center;
-  }
-
-  .item_li{
-    width: 70%;
-    height: 31%;
-    border: 1px solid white;
-    list-style: none;
-    margin-left: 15%;
-    font-size: 18px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    font-family: yuanjian;
-    color: black;
-
-    border-bottom: 1px solid gainsboro;
-  }
-
-  .item_li:last-child{
-    border-bottom: 0px solid gainsboro;
-  }
-
-  .act_item_start{
-    width: 100%;
-    height: 60%;
-  }
 </style>

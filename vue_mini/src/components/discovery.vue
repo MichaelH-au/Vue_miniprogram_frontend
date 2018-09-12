@@ -53,7 +53,7 @@
                   </div>
                 </li>
                 <li class="item_li">
-                  <!--{{rate_images[item.eventRating]}}-->
+                  <!--{{rate_images[item.locationRating]}}-->
                   <img class="act_item_start" v-bind:src="rate_images[item.locationRating]" alt="">
                 </li>
               </ul>
@@ -82,7 +82,7 @@
                   </div>
                 </li>
                 <li class="item_li">
-                  <!--{{rate_images[item.eventRating]}}-->
+                  <!--{{rate_images[item.locationRating]}}-->
                   <img class="act_item_start" v-bind:src="rate_images[item.locationRating]" alt="">
                 </li>
               </ul>
@@ -109,11 +109,32 @@
         async: false,
 
         success: function (result) {
-          // this.all_events = result.body;
+          // this.all_locations = result.body;
           //console.log(result);
           that.all_locations=result;
+          that.banner = result.banner;
+          for (let i in that.all_locations){
+            console.log(that.all_locations[i]);
+            let newRating = 3 + (that.all_locations[i].locationRating - 5) / 5 + (that.all_locations[i].fav_number - 5) / 5;
+            newRating = Math.round(newRating);
+            newRating = (newRating > 5)?5:newRating;
+            newRating = (newRating < 1)?1:newRating;
+            console.log(newRating);
 
-          // //console.log(this.all_events[0]);
+            that.all_locations[i].locationRating = newRating - 1;
+            let fav_num = that.all_locations[i].fav_number;
+            if (fav_num <= 10){
+              that.all_locations[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }else if(fav_num <= 100){
+              that.all_locations[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }else {
+              that.all_locations[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }
+
+
+          }
+
+          // //console.log(this.all_locations[0]);
         }
 
       });
@@ -139,7 +160,7 @@
 
         // //console.log(e.target.innerText);
         // this.all = "bbb";
-        // //console.log(this.all_events[0].urlPath);
+        // //console.log(this.all_locations[0].urlPath);
         // //console.log(this.server_url);
         if (e.target.innerText == this.category[0]){
           $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
@@ -160,10 +181,11 @@
 </script>
 <style scoped>
 
-  @font-face {
-    font-family: 'yuanjian';
-    src: url('../assets/fonts/yuanjian.ttf');
-  }
+
+  /*@font-face {*/
+    /*font-family: 'yuanjian';*/
+    /*src: url('../assets/fonts/yuanjian.ttf');*/
+  /*}*/
 
   .header{
     width: 100vw;
@@ -252,40 +274,13 @@
     z-index: 5;
     border-radius: 10px;
   }
-  .back_text{
-    position: absolute;
-    width: 80%;
-    height: 60%;
-    left:10%;
-    top:10%;
-    z-index: 6;
-  }
-  .back_color{
-    width: 96%;
-    margin-left: 10px;
-    margin-top: 10px;
-    position: absolute;
-    height: 80%;
-    background-color: #77d9c7;
-    opacity: 0.3;
-    box-shadow: 4px 4px 1px 0.1px #aaa;
-    z-index: 1;
-    border-radius: 10px;
-  }
   .act_item_img{
     position: relative;
     width: 100%;
     height: 100%;
     border-radius: 10px;
   }
-  .back_text{
-    position: absolute;
-    width: 80%;
-    height: 60%;
-    left:10%;
-    top:10%;
-    z-index: 6;
-  }
+
 
   .item_title{
     width: 80%;
@@ -296,7 +291,7 @@
   }
 
   .item_info{
-    width: 100%;
+    width: 80%;
     text-align: left;
     display: block;
     color:black;
@@ -398,7 +393,7 @@
     border-bottom: 0px solid gainsboro;
   }
 
-  .act_item_start{
+  .act_item_start {
     width: 80%;
     height: 60%;
   }

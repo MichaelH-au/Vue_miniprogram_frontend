@@ -530,4 +530,8 @@
 <style scoped>
   @import '../assets/css/collection.css';
 
+  /*@font-face {*/
+    /*font-family: 'yuanjian';*/
+    /*src: url('../assets/fonts/yuanjian.ttf');*/
+  /*}*/
 </style>

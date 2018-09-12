@@ -100,7 +100,26 @@
           // this.all_events = result.body;
           //console.log(result);
           that.all_locations=result;
+          for (let i in that.all_locations){
+            console.log(that.all_locations[i]);
+            let newRating = 3 + (that.all_locations[i].locationRating - 5) / 5 + (that.all_locations[i].fav_number - 5) / 5;
+            newRating = Math.round(newRating);
+            newRating = (newRating > 5)?5:newRating;
+            newRating = (newRating < 1)?1:newRating;
+            console.log(newRating);
 
+            that.all_locations[i].locationRating = newRating - 1;
+            let fav_num = that.all_locations[i].fav_number;
+            if (fav_num <= 10){
+              that.all_locations[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }else if(fav_num <= 100){
+              that.all_locations[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }else {
+              that.all_locations[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_locations[i].locationId) % 5);
+            }
+
+
+          }
           // //console.log(this.all_events[0]);
         }
 
@@ -142,10 +161,10 @@
   }
 </script>
 <style scoped>
-  @font-face {
-    font-family: 'yuanjian';
-    src: url('../assets/fonts/yuanjian.ttf');
-  }
+  /*@font-face {*/
+    /*font-family: 'yuanjian';*/
+    /*src: url('../assets/fonts/yuanjian.ttf');*/
+  /*}*/
 
   .header{
     width: 100vw;

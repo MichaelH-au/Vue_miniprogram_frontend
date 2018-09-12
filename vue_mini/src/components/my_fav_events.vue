@@ -98,6 +98,24 @@
           // this.all_events = result.body;
           // //console.log(result);
           that.all_events=result;
+          for (let i in that.all_events){
+            let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
+            newRating = Math.round(newRating);
+            newRating = (newRating > 5)?5:newRating;
+            newRating = (newRating < 1)?1:newRating;
+            // console.log(newRating);
+            that.all_events[i].eventRating = newRating - 1;
+            let fav_num = that.all_events[i].fav_number;
+            if (fav_num <= 10){
+              that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }else if(fav_num <= 100){
+              that.all_events[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }else {
+              that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+            }
+
+
+          }
           //console.log(that.all_events);
           // //console.log(this.all_events[0]);
         }
