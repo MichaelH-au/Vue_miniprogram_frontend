@@ -156,25 +156,27 @@
 #event_time{
     /*height:50%;*/
     height:30px;
-    width:70%;
-    margin-left: 28%;
+    width:auto;
+    /*margin-left: 10%;*/
     margin-top: 5px;
     margin-right: 5px;
 
     border-bottom: 1px solid #555555;
-    text-align: right;
+    text-align: center;
 }
 
 #event_time span{
-    line-height: 25px;
+    width: auto;
+    line-height: 20px;
     margin-top: 10px;
     font-size: 18px;
     font-family: 'yuanjian';
     font-weight: lighter;
     /*height: 100%;*/
     float:right;
+    /*border: 1px solid red;*/
     text-decoration: none;
-    display: inline-block;
+    display: block;
     color: black;
 }
 

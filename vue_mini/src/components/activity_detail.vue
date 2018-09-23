@@ -5,7 +5,7 @@
     <!--<div id="loading">-->
       <!--<img src="../assets/images/loading.jpg" alt="">-->
     <!--</div>-->
-    <div class="tap_btu" @click="add_fav">
+    <div class="tap_btu " @click="add_fav">
       <img src="../assets/images/collection.png" alt="">
     </div>
     <div id="img_win">
@@ -223,7 +223,7 @@
         success:function (result) {
 
           //Load images
-          //console.log(result);
+          console.log(result);
           let images;
           let urlPath;
           if (type == "loc"){
@@ -492,9 +492,11 @@
 
         }
       }
-      this.timer = setInterval(slider_change,2500);
-      this.timer;
+      if (window.num_imgs >1) {
+        this.timer = setInterval(slider_change, 2500);
+        this.timer;
 
+      }
 
       // show code function
       document.getElementById('show_code').addEventListener('click', show_code_fun);
