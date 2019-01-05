@@ -65,9 +65,6 @@
             });
 
           }
-
-          // //console.log(that.markers);
-          // //console.log(this.all_events[0]);
         }
 
       });

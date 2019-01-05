@@ -53,19 +53,7 @@
 
       // $('#footer').css('top',height);
     },
-    // methods:{
-    //
-    //   handleScroll () {
-    //     var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-    //     var height = $(window).height() + 'px';
-    //     let test2 = window.innerHeight + 'px';
-    //
-    //     if ($('#footer').css('top') != test2){
-    //       // alert(1);
-    //       $('#footer').css('top',test2);
-    //     }
-    //   },
-    // },
+
     watch: {
       $route(to) {
         //console.log(to.query.type);

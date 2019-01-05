@@ -121,12 +121,6 @@
     },
     beforeMount(){
 
-      //console.log("555");
-      if (this.all_events){
-        //console.log("have");
-      }else {
-        //console.log("no have");
-      }
       let that = this;
       $.ajax({
         url: "https://www.sharegotech.com/events/getUpcommingEvents_H5",
@@ -135,13 +129,7 @@
         async: false,
 
         success: function (result) {
-          // this.all_events = result.body;
-          // //console.log(result);
-          //console.log(result);
           that.all_events=result.events;
-          // console.log(that.all_events);
-          // //console.log(this.all_events[0]);
-
           that.banner = result.banner;
           for (let i in that.all_events){
             let newRating = 3 + (that.all_events[i].eventRating - 5) / 5 + (that.all_events[i].fav_number - 5) / 5;
@@ -151,15 +139,14 @@
             // console.log(newRating);
             that.all_events[i].eventRating = newRating - 1;
             let fav_num = that.all_events[i].fav_number;
+            let formula =  Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5;
             if (fav_num <= 10){
-              that.all_events[i].fav_number = parseInt(15 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+              that.all_events[i].fav_number = parseInt(15 * formula);
             }else if(fav_num <= 100){
-              that.all_events[i].fav_number = parseInt(25 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+              that.all_events[i].fav_number = parseInt(25 * formula);
             }else {
-              that.all_events[i].fav_number = parseInt(30 * Math.sqrt(fav_num + 1) + parseInt(that.all_events[i].eventId) % 5);
+              that.all_events[i].fav_number = parseInt(30 * formula);
             }
-
-
           }
 
         }
@@ -190,24 +177,26 @@
         this.current_position = $(document).scrollTop();
       },
       tclick(e) {
+        let active = {"color":"#77D9C7","border-bottom":"2px solid #77D9C7"};
+        let deactive = {"color":"black","border-bottom":"0px"};
 
         if (e.target.innerText == this.category[0]){
-          $(".items").eq(0).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
+          $(".items").eq(0).css(active).siblings().css(deactive);
           this.all_cate = true;
         }else if(e.target.innerText == this.category[1]) {
-          $(".items").eq(1).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
+          $(".items").eq(1).css(active).siblings().css(deactive);
           this.all_cate = false;
           this.curr_type = "art entertainment";
         }else if(e.target.innerText == this.category[2]) {
-          $(".items").eq(2).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
+          $(".items").eq(2).css(active).siblings().css(deactive);
           this.all_cate = false;
           this.curr_type = "hard skill development";
         }else if(e.target.innerText == this.category[3]) {
-          $(".items").eq(3).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
+          $(".items").eq(3).css(active).siblings().css(deactive);
           this.all_cate = false;
           this.curr_type = "physical entertainment";
         }else if(e.target.innerText == this.category[4]) {
-          $(".items").eq(4).css({"color":"#77D9C7","border-bottom":"2px solid #77D9C7"}).siblings().css({"color":"black","border-bottom":"0px"});
+          $(".items").eq(4).css(active).siblings().css(deactive);
           this.all_cate = false;
           this.curr_type = "soft skill development";
         }

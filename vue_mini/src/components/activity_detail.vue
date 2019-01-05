@@ -168,21 +168,14 @@
         //console.log(FullURL);
         var ParametersArray = [];
         for (let i = 1; i < FullURL.length;i++){
-          //console.log(typeof(FullURL[i]));
           let tmp = FullURL[i].split('&');
-          //console.log(tmp);
           for(let i = 0;i < tmp.length;i++){
-            // let peer = tmp[i].split('&');
             ParametersArray.push(tmp[i]);
 
           }
         }
-        //console.log(ParametersArray);
-        // var ParametersArray = FullURL.split('&');
-        // //console.log(ParametersArray);
         for (var i=0; i < ParametersArray.length;i++){
           var CurrentParameter = ParametersArray[i].split('=');
-          //console.log(CurrentParameter);
           if(CurrentParameter[0] == Parameter){
             return CurrentParameter[1];
           }
